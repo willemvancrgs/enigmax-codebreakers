@@ -5,6 +5,11 @@ Scripts to expedite the process of breaking ciphers
 - Work on changes in a seperate branch before merging
 - Each cipher should have its own python file/module to solve it, including a subroutine called `solve()` that takes ciphertext and any extra information as parametres, and then solves i
 ## Ciphers implemented
-WIP
+- Affine Cipher
 ## Ciphers yet to implement
-WIP
+- Caesar
+- General Monoalphabetic Substitution
+- Vinigere
+- Morse Code
+- Beaufort Cipher
+- Transposition Ciphers
