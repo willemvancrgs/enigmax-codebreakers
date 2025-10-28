@@ -1,4 +1,4 @@
-from checking import *
-import affine_cipher
-import monoalphabetic
-from base_cipher import cipher
+from .checking import *
+from . import affine_cipher
+from . import monoalphabetic
+from .base_cipher import cipher

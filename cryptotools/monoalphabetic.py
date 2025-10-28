@@ -1,5 +1,5 @@
 from string import ascii_uppercase
-from base_cipher import cipher
+from .base_cipher import cipher
 
 
 class monoalphabetic_cipher(cipher):
@@ -20,7 +20,7 @@ class monoalphabetic_cipher(cipher):
         return result
     
     def intelligent_solve(self):
-        raise NotImplementedError
+        raise NotImplementedError("Unfinished, throws an error")
         #TODO attempt this method: https://ti89.com/cryptotut/mono_crack.htm
         # STEP 1
         e_character = max(self.frequencies, key=self.frequencies.get)
