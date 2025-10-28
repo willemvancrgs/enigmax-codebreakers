@@ -1,4 +1,4 @@
-def encode_railfence(cipher_text: str, rail_count: int = 3) -> dict[int, str]:
+def split(cipher_text: str, rail_count: int = 3) -> dict[int, str]:
     """Encode text using Rail Fence cipher."""
     rails = {i: '' for i in range(rail_count)}
     rail_num = 0
