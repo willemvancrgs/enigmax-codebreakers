@@ -23,6 +23,8 @@ def compose(rails: dict[int, str], order: list[int] | None = None) -> str:
         order = range(len(rails))
     return "".join(rails[j] for j in order)
 
+solve = split
+
 if __name__ == "__main__":
     text = "THEQUICKBROWNFOXJUMPSOVERTHELAZYDOG"
     encoded = encode_railfence(text, 5)
