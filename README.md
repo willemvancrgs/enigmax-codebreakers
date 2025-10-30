@@ -7,9 +7,4 @@ Scripts to expedite the process of breaking ciphers
 ## Ciphers implemented
 - Affine Cipher
 - Morse Code
-## Ciphers yet to implement
-- Caesar
-- General (random) Monoalphabetic Substitution
-- Vinigere
-- Beaufort Cipher
-- Transposition Ciphers
+- Amsco Cipher
