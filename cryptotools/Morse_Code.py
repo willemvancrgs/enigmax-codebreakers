@@ -41,7 +41,7 @@ def decode(morse: str, word_gap: str = " /"):
     
     return decoded_sentence
  
-def encode(text):
+def encode(text: str):
     """Encode text to morse."""
     text = text.replace("%","0/0")
     

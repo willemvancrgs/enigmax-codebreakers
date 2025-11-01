@@ -1,10 +1,9 @@
 import math
-from collections import Counter
 import numpy as np
 from string import ascii_uppercase
 from typing import Iterable
 
-def consecutive_freq(text: str, length: int=4) -> dict:
+def consecutive_freq(text: str, length: int=4) -> dict[str: int]:
     chunk_freq = {}
     
     for i in range(len(text) - length + 1):
