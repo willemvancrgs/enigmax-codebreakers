@@ -3,7 +3,6 @@ from .base_cipher import cipher
 
 
 class monoalphabetic_cipher(cipher):
-
     def solve(self, key:str):
         if len(key) != 26:
             raise ValueError("Not all letters of the alphabet are covered by this key")
