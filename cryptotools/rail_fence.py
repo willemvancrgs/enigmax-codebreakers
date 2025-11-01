@@ -20,7 +20,7 @@ def split(cipher_text: str, rail_count: int = 3) -> dict[int, str]:
 def compose(rails: dict[int, str], order: list[int] | None = None) -> str:
     """Compose rails into one string"""
     if order is None:
-        order = range(len(rails))
+        order = list(range(len(rails)))
     return "".join(rails[j] for j in order)
 
 solve = split

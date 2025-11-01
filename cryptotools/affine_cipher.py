@@ -1,4 +1,4 @@
-def solve(ciphertext, a, b):
+def solve(ciphertext: str, a: int, b: int):
   """
   Decrypts an Affine cipher given the ciphertext and keys.
 
@@ -19,7 +19,7 @@ def solve(ciphertext, a, b):
   a_inv = mod_inverse(a, 26)
   return decrypt(ciphertext, a_inv, b)
 
-def mod_inverse(a, m):
+def mod_inverse(a: int, m: int):
   """
     Returns the modular inverse of a modulo m.
 
@@ -40,7 +40,7 @@ def mod_inverse(a, m):
       t += m
   return t
 
-def decrypt(ciphertext, a_inv, b):
+def decrypt(ciphertext: str, a_inv: int, b: int):
   """
   Decrypts a ciphertext encrypted with the Affine cipher.
   Args:
