@@ -1,8 +1,9 @@
 from cryptotools.rail_fence import *
 
-def test_split():
-    assert split("THEQUICKBROWNFOXJUMPSOVERTHELAZYDOG", 5) == {0: 'TBJRD', 1: 'HKRXUETYO', 2: 'ECOOMVHZG', 3: 'QIWFPOEA', 4: 'UNSL'}
-    assert split("I LOVE CIPHER CHALLENGE 2025", 2) == {0: 'ILV IHRCALNE22', 1: ' OECPE HLEG 05'}
+def test_encrypt():
+    assert encrypt("THEQUICKBROWNFOXJUMPSOVERTHELAZYDOG", 5) == {0: 'TBJRD', 1: 'HKRXUETYO', 2: 'ECOOMVHZG', 3: 'QIWFPOEA', 4: 'UNSL'}
+    assert encrypt("I LOVE CIPHER CHALLENGE 2025", 2) == {0: 'ILV IHRCALNE22', 1: ' OECPE HLEG 05'}
+    assert encrypt("I LOVE ENIGMAX", 4, 5) == {0: ' EX', 1: 'IL NA', 2: 'OEIM', 3: 'VG'}
 
 def test_compose():
     assert compose({0: 'I WISH I WAS A ', 1: 'LITTLE BIT TALLER'}) == 'I WISH I WAS A LITTLE BIT TALLER'

@@ -1,4 +1,4 @@
-def split(cipher_text: str, rail_count: int = 3, offset: int = 0) -> dict[int, str]:
+def encrypt(cipher_text: str, rail_count: int = 3, offset: int = 0) -> dict[int, str]:
     """Encode text using Rail Fence cipher."""
     
     def zigzag(offset: int, raiL_count: int = 3) -> tuple[int, bool]:#
@@ -34,10 +34,8 @@ def compose(rails: dict[int, str], order: list[int] | None = None) -> str:
         order = list(range(len(rails)))
     return "".join(rails[j] for j in order)
 
-solve = split
-
 if __name__ == "__main__":
     text = "THEQUICKBROWNFOXJUMPSOVERTHELAZYDOG"
-    encoded = split(text, 5, 7)
+    encoded = encrypt(text, 5, 7)
     print(encoded)
     print(compose(encoded, []))
