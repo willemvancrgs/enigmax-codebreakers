@@ -27,6 +27,6 @@ solve = split
 
 if __name__ == "__main__":
     text = "THEQUICKBROWNFOXJUMPSOVERTHELAZYDOG"
-    encoded = encode_railfence(text, 5)
+    encoded = split(text, 5)
     print(encoded)
     print(compose(encoded, []))
