@@ -30,9 +30,12 @@ def compose(rails: dict[int, str], order: list[int] | None = None) -> str:
         order = list(range(len(rails)))
     return "".join(rails[j] for j in order)
 
-def decrypt(ciphertext: str, rail_count: int = 3, offset: int = 0):
-    """Decrypt a ciphertext"""
+def decrypt(ciphertext: str, rail_count: int = 3, offset: int = 0, order: list[int] | None = None) -> str:
+    """Decrypt a ciphertext in either railfence or redefence cipher"""
     text_length = len(ciphertext)
+
+    if order is None:
+        order = list(range(rail_count))
 
     # 1: Determine rail lengths and their positions in the ciphertext
     cycle_len = 2 * rail_count - 2
@@ -40,7 +43,7 @@ def decrypt(ciphertext: str, rail_count: int = 3, offset: int = 0):
     remaining = text_length % cycle_len
 
     # 1.1: base counts from full cycles
-    counts = [2 * full_cycles] * rail_count
+    counts = [2 * full_cycles] * rail_count 
     counts[0] = counts[-1] = full_cycles  # top and bottom rails
 
     # 1.2: determine which rails get letters from the remaining partial cycle
@@ -55,19 +58,22 @@ def decrypt(ciphertext: str, rail_count: int = 3, offset: int = 0):
         counts[rail] += 1
 
     # 1.3 Create rail positions
+    counts = [counts.copy()[i] for i in order] # Reorders the count of charecters in each line
+    order = [order.index(i) for i in range(rail_count)] # Flips the key-value pairs for the order
+
     rail_positions: list[int] = []
     for i in range(len(counts)):
         rail_positions.append(sum(counts[:i]))
 
     # 3: Create plaintext
     plaintext: list[str] = []
-
     rail_indices = [0] * rail_count 
     rail, direction = zigzag(offset, rail_count)
-
+    
     for _ in range(text_length):
-        plaintext.append(ciphertext[rail_positions[rail] + rail_indices[rail]])
-        rail_indices[rail] += 1
+        plaintext.append(ciphertext[rail_positions[order[rail]] + rail_indices[order[rail]]])
+        
+        rail_indices[order[rail]] += 1
 
         rail += direction
         if rail == 0 or rail == rail_count - 1:
@@ -83,3 +89,5 @@ if __name__ == "__main__":
     print(compose(encoded, []))
 
     print(decrypt("EOMHGHQRWUPTEOSTUBNJSRLDIKFXOEAYCOVZ", 5, 6))
+    
+    print(decrypt(" OIM2!EEX2  IVNA0LG5", 5, 6, [1, 3, 4, 2, 0]))
