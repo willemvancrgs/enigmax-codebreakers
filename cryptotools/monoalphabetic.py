@@ -1,23 +1,20 @@
 from string import ascii_uppercase
-from .base_cipher import cipher
+from .base_cipher import Cipher
 
 
-class monoalphabetic_cipher(cipher):
-
-    def solve(self, key:str):
+class monoalphabetic_cipher(Cipher):
+    def solve(self, key: str) -> str:
         if len(key) != 26:
             raise ValueError("Not all letters of the alphabet are covered by this key")
-        letters = []
-        for letter in self.ciphertext:
-            letters.append([letter, 0])
+
+        letters = [[letter, 0] for letter in self.ciphertext]
+
         for i in range(26):
             for letter in letters:
-                if not letter[1] and letter[0] == ascii_uppercase[i]:
-                    letter == [key[i], 1]
-        result = ""
-        for letter in letters:
-            result = result + letter[0]
-        return result
+                if letter[1] == 0 and letter[0] == ascii_uppercase[i]:
+                    letter[0], letter[1] = key[i], 1
+
+        return "".join(letter[0] for letter in letters)
     
     def intelligent_solve(self):
         raise NotImplementedError("Unfinished, throws an error")
@@ -61,7 +58,6 @@ class monoalphabetic_cipher(cipher):
         r_character = max(counts, key=counts.get)[1]
         step4_substituted = step3_substituted.replace(r_character, "r")
         
-
 
 def solve(ciphertext:str, key:str):
     """
