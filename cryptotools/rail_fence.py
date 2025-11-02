@@ -1,8 +1,19 @@
-def split(cipher_text: str, rail_count: int = 3) -> dict[int, str]:
+def split(cipher_text: str, rail_count: int = 3, offset: int = 0) -> dict[int, str]:
     """Encode text using Rail Fence cipher."""
+    
+    def zigzag(offset: int, raiL_count: int = 3) -> tuple[int, bool]:#
+        """Return the starting rail number and the direction."""
+        period = 2 * (rail_count - 1)
+        m = offset % period
+        if m < rail_count:
+            return m, True
+        else: # If the ofset makes the start go back up again
+            return period - m, False 
+
     rails = {i: '' for i in range(rail_count)}
-    rail_num = 0
-    direction = True # True for down
+    rail_num, direction = zigzag(offset, rail_count)
+
+    # True direction means the fence is going down
 
     for letter in cipher_text:
         rails[rail_num] += letter
@@ -20,13 +31,13 @@ def split(cipher_text: str, rail_count: int = 3) -> dict[int, str]:
 def compose(rails: dict[int, str], order: list[int] | None = None) -> str:
     """Compose rails into one string"""
     if order is None:
-        order = range(len(rails))
+        order = list(range(len(rails)))
     return "".join(rails[j] for j in order)
 
 solve = split
 
 if __name__ == "__main__":
     text = "THEQUICKBROWNFOXJUMPSOVERTHELAZYDOG"
-    encoded = split(text, 5)
+    encoded = split(text, 5, 7)
     print(encoded)
     print(compose(encoded, []))
