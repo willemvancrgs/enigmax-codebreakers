@@ -81,6 +81,8 @@ def decrypt(ciphertext: str, rail_count: int = 3, offset: int = 0, order: list[i
 
     return "".join(plaintext)
     
+def solve(ciphertext: str, rail_count: int = 3, offset: int = 0, order: list[int] | None = None):
+    return decrypt(ciphertext, rail_count, offset, order)
 
 if __name__ == "__main__":
     text = "THEQUICKBROWNFOXJUMPSOVERTHELAZYDOG"
