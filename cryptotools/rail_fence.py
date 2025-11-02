@@ -31,41 +31,47 @@ def compose(rails: dict[int, str], order: list[int] | None = None) -> str:
     return "".join(rails[j] for j in order)
 
 def decrypt(ciphertext: str, rail_count: int = 3, offset: int = 0):
-    """"""
+    """Decrypt a ciphertext"""
     text_length = len(ciphertext)
 
-    # 1: Make zigzag
+    # 1: Determine rail lengths and their positions in the ciphertext
+    cycle_len = 2 * rail_count - 2
+    full_cycles = text_length // cycle_len
+    remaining = text_length % cycle_len
+
+    # 1.1: base counts from full cycles
+    counts = [2 * full_cycles] * rail_count
+    counts[0] = counts[-1] = full_cycles  # top and bottom rails
+
+    # 1.2: determine which rails get letters from the remaining partial cycle
+    start_rail, direction = zigzag(offset, rail_count)
+    for i in range(remaining):
+        rail = start_rail + i * direction
+        # reflect at top/bottom rails
+        if rail >= rail_count:
+            rail = cycle_len - rail
+        elif rail < 0:
+            rail = -rail
+        counts[rail] += 1
+
+    # 1.3 Create rail positions
+    rail_positions: list[int] = []
+    for i in range(len(counts)):
+        rail_positions.append(sum(counts[:i]))
+
+    # 3: Create plaintext
+    plaintext: list[str] = []
+
+    rail_indices = [0] * rail_count 
     rail, direction = zigzag(offset, rail_count)
 
-    positions: list[int] = []
-
     for _ in range(text_length):
-        positions.append(rail)
+        plaintext.append(ciphertext[rail_positions[rail] + rail_indices[rail]])
+        rail_indices[rail] += 1
+
         rail += direction
         if rail == 0 or rail == rail_count - 1:
             direction *= -1
-    
-    print(positions)
-
-    # 2: Determine rail lengths
-    rail_lengths = [positions.count(r) for r in range(rail_count)] # todo: improve mathematically
-
-    # 3: Split ciphertext
-    rails_list: list[list[str]] = []
-    pos1 = 0
-    pos2 = 0
-
-    for count in rail_lengths:
-        pos1 = pos2
-        pos2 += count
-        rails_list.append(list(ciphertext[pos1:pos2]))
-
-    # 4: Create plaintext
-    plaintext: list[str] = []
-
-    for rail in positions:
-        plaintext.append(rails_list[rail][0])
-        rails_list[rail].pop(0)
 
     return "".join(plaintext)
     
@@ -76,4 +82,4 @@ if __name__ == "__main__":
     print(encoded)
     print(compose(encoded, []))
 
-    print(decrypt("HKFTECBNOQIRWXUO", 4, 5))
+    print(decrypt("EOMHGHQRWUPTEOSTUBNJSRLDIKFXOEAYCOVZ", 5, 6))
