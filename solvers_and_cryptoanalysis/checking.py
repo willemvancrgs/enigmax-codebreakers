@@ -2,6 +2,16 @@ import math
 from string import ascii_uppercase
 from typing import Iterable
 
+PP_freq = {'A': 0.0774016898062627, 'B': 0.0168531760692496, 'C': 0.025614686881730825,
+           'D': 0.04095553123241224, 'E': 0.128536111235796, 'F': 0.022436373304237638,
+           'G': 0.019002551628173565, 'H': 0.06243029635486622, 'I': 0.07112447733056187,
+           'J': 0.0017505757564248202, 'K': 0.006037242031772777, 'L': 0.04052738252669887,
+           'M': 0.02706486798172772, 'N': 0.07024055742199234, 'O': 0.07489322178448238,
+           'P': 0.0158052475838947, 'Q': 0.0011394280071404155, 'R': 0.0607142487198699,
+           'S': 0.06162579112558223, 'T': 0.08776530545302622, 'U': 0.02814559818243969,
+           'V': 0.010562152344977366, 'W': 0.02247262783173756, 'X': 0.0017816510657104679,
+           'Y': 0.023442868043878337, 'Z': 0.0016763402953535508} # Letter Frequency of Pride and Prejudice
+
 def consecutive_freq(text: str, length: int=4) -> dict[str, int]:
     chunk_freq = {}
     
@@ -15,18 +25,20 @@ def consecutive_freq(text: str, length: int=4) -> dict[str, int]:
     chunk_freq: dict[str, int] = dict(sorted(chunk_freq.items(), key=lambda x: x[1], reverse=True)) # returns sorted list
     return chunk_freq
 
-def letter_freq_vector(text: str) -> list[tuple[str, float]]: # For 26-degree vector angle
+def letter_freq_vector(text: str) -> dict[str, float]: # For 26-degree vector angle
     text = text.upper()
-    
-    total = 0
     freq = {letter: 0 for letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ"}
-    
-    for l in text:
-        if l.isalpha():
-            total += 1
-            freq[l] += 1
+    total = 0
 
-    return [(k, v/total) for k, v in freq.items()]
+    for l in text:
+        if l in freq:
+            freq[l] += 1
+            total += 1
+
+    if total == 0:
+        return {letter: 0.0 for letter in freq}  # avoid division by zero
+
+    return {k: v / total for k, v in freq.items()}
 
 def shan_entropy(text: str) -> float:
     probs = letter_freq_vector(text)
@@ -96,3 +108,6 @@ if __name__ == "__main__":
     print(letter_freq_vector(text))
     """
     print(cosine_angle([1, 2, 3], [3, 2, 1]))
+    import requests
+    text = requests.get("https://www.gutenberg.org/cache/epub/1342/pg1342.txt").text  # Pride and Prejudice
+    print(letter_freq_vector(text))
