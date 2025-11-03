@@ -1,7 +1,7 @@
 from itertools import cycle #thing that allows infinetly looping until coondition is met
 
 
-def solve(ciphertext, key_type, word_key=None, numeric_key=None):
+def solve(ciphertext: str, key_type: int, word_key: str | None = None, numeric_key: str | None = None) -> str:
     """Decipher AMSCO ciphertext.
 
     Parameters:
@@ -15,6 +15,8 @@ def solve(ciphertext, key_type, word_key=None, numeric_key=None):
     """
     # Replicated original logic but using parameters instead of input(), and returning instead of printing.
 
+    # Build and validate key depending on key_type
+    key = None
     if key_type == 1:
         if word_key is None:
             word_key = ''
@@ -27,10 +29,15 @@ def solve(ciphertext, key_type, word_key=None, numeric_key=None):
             key = []
         else:
             key = [int(d) for d in str(numeric_key)]
+    else:
+        raise ValueError("key_type must be 1 (word) or 2 (numeric)")
+
+    if not key:
+        raise ValueError("Key must be provided and non-empty")
 
     #actual decipherer
-    col_pattern = {}
-    col_letters = {}
+    col_pattern: dict[int, list[int]] = {}
+    col_letters: dict[int, list[str]] = {}
     key_cycle = cycle(key)
     size_cycle = cycle([1, 2])
     counter = 1
@@ -56,7 +63,7 @@ def solve(ciphertext, key_type, word_key=None, numeric_key=None):
     text_iter = iter(ciphertext)
     for col_index in sorted(col_pattern.keys()):
         for size in col_pattern[col_index]:
-            chunk = ''.join(next(text_iter) for count in range(size))
+            chunk = ''.join(next(text_iter) for _ in range(size))
             col_letters.setdefault(col_index, []).append(chunk)
 
     # Reverse columns
@@ -83,5 +90,7 @@ if __name__ == "__main__":
     elif key_type == 2:
         numeric_key = input("Input numeric key: ")
         result = solve(ciphertext, key_type, numeric_key=numeric_key)
+    else:
+        raise ValueError("key_type must be 1 (word) or 2 (numeric)")
 
     print(result)
