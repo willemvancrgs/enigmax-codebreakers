@@ -1,4 +1,3 @@
-import math
 import argparse
 
 def encode(plain_text: str, key: str) -> str:
@@ -32,7 +31,7 @@ def decode(cipher_text: str, key: str) -> str:
     alphabet = "abcdefghijklmnopqrstuvwxyz"
     cipher_text = cipher_text.replace(" ", "").lower()
     key = key.lower()
-    deciphered_text = []
+    deciphered_text: list[str] = []
     key_current = 0
     key_max = len(key) - 1
 
@@ -67,7 +66,7 @@ def crack_cipher(cipher_text: str) -> tuple[str, str]:
     cipher_text = cipher_text.replace(" ", "").lower()
     
     # Initial decoding attempt
-    initial_decode = []
+    initial_decode: list[str] = []
     for letter in cipher_text:
         if letter in alphabet:
             # Beaufort reciprocal property: 25 - letter_value
@@ -97,12 +96,12 @@ def crack_cipher(cipher_text: str) -> tuple[str, str]:
     )))
     
     # Split text into columns based on key length
-    columns = [[] for _ in range(est_key_length)]
+    columns: list[list[str]] = [[] for _ in range(est_key_length)]
     for i, letter in enumerate(result):
         columns[i % est_key_length].append(letter)
     
     # Analyze each column to find key letters
-    key_letters = []
+    key_letters: list[str] = []
     for column in columns:
         freq = [0] * 26
         for ch in column:
