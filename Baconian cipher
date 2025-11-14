@@ -1,0 +1,30 @@
+lookup = {
+"A":"AAAAA","B":"AAAAB",
+"C":"AAABA","D":"AAABB",
+"E":"AABAA","F":"AABAB",
+"G":"AABBA","H":"AABBB",
+"I":"ABAAA","J":"ABAAA","K":"ABAAB",
+"L":"ABABA","M":"ABABB",
+"N":"ABBAA","O":"ABBAB",
+"P":"ABBBA","Q":"ABBBB",
+"R":"BAAAA","S":"BAAAB",
+"T":"BAABA","U": "BAABB", "V": "BAABB",
+"W":"BABAA","X":"BABAB",
+"Y":"BABBA", "Z":"BABBB"
+}
+ 
+def decrypt_baconian_cipher(cipher):
+    decipher = ''
+    x = 0
+    while x < len(cipher):
+        if cipher[x] != ' ':
+            substr = cipher[x:x + 5] #makes a substring 5 letters long if there is acc smth in that index
+            decipher += list(lookup.keys())[list(lookup.values()).index(substr)] #finds which letter matches that 5 letter substring and adds it to decipher string
+            x += 5
+        else:
+            decipher += ' '
+            x += 1 #skip a space
+    print(decipher)
+ 
+cipher = input("Cipher text: ").upper()
+decrypt_baconian_cipher(cipher)
