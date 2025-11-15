@@ -8,3 +8,5 @@ Scripts to expedite the process of breaking ciphers
 - Affine Cipher
 - Morse Code
 - Amsco Cipher
+- Beaufort Cipher
+- Rail fence / Redefence Cipher
