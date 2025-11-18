@@ -13,8 +13,9 @@ def encode(plain_text: str, key: str) -> str:
         str: The encoded cipher text
 
     Note:
-        The Beaufort cipher is reciprocal, meaning the same process is used for both
-        encoding and decoding. However, we provide separate functions for clarity.
+        The Beaufort cipher is reciprocal, meaning the same process is used
+        for both encoding and decoding. However, we provide separate functions
+        for clarity.
     """
     return decode(plain_text, key)
 
@@ -58,7 +59,8 @@ def decode(cipher_text: str, key: str) -> str:
 
 def crack_cipher(cipher_text: str) -> tuple[str, str]:
     """
-    Attempt to crack the Beaufort cipher without a known key using frequency analysis.
+    Attempt to crack the Beaufort cipher without a known key
+    using frequency analysis.
 
     Args:
         cipher_text (str): The cipher text to crack
@@ -94,10 +96,11 @@ def crack_cipher(cipher_text: str) -> tuple[str, str]:
 
     # Estimate key length using IC
     ic = calculate_ic(result)
-    est_key_length = max(1, int(round(
-        ((0.0667 - 0.0385) * length_of_text) /
-        (((0.0667 - ic) * (length_of_text - 1)) + (length_of_text * (ic - 0.0385)))
-    )))
+
+    num = (0.0667 - 0.0385) * length_of_text
+    den = (0.0667 - ic) * (length_of_text - 1) + length_of_text * (ic - 0.0385)
+
+    est_key_length = max(1, int(round(num / den)))
 
     # Split text into columns based on key length
     columns: list[list[str]] = [[] for _ in range(est_key_length)]
@@ -131,7 +134,8 @@ def solve(cipher_text: str, key: str = "") -> tuple[str, str]:
 
     Args:
         cipher_text (str): The cipher text to decode (can include spaces)
-        key (str, optional): The key to use for decoding. If not provided, will attempt to crack.
+        key (str, optional): The key to use for decoding. If not provided,
+        will attempt to crack.
 
     Returns:
         tuple[str, str]: (decrypted_text, discovered_key)
@@ -143,8 +147,14 @@ def solve(cipher_text: str, key: str = "") -> tuple[str, str]:
 
 def main():
     """Command line interface for the Beaufort cipher."""
-    parser = argparse.ArgumentParser(description='Encode/Decode text using the Beaufort cipher')
-    parser.add_argument('action', choices=['encode', 'decode'], help='Action to perform')
+    parser = argparse.ArgumentParser(
+        description='Encode/Decode text using the Beaufort cipher'
+    )
+    parser.add_argument(
+        'action',
+        choices=['encode', 'decode'],
+        help='Action to perform'
+    )
     parser.add_argument('text', help='Text to process')
     parser.add_argument('--key', help='Key for encoding/decoding', default='')
 
