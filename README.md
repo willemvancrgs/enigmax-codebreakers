@@ -1,12 +1,50 @@
-# enigmax-codebreakers
-Scripts to expedite the process of breaking ciphers
-## Contribution guidelines
-- Unless popular decision overrules this, scripts and contributions should be made in python, seeing as this is the language most of us are familiar with
+# Enigmax Codebreakers
+
+A collection of Python scripts to expedite solving ciphers, developed for the National Cipher Challenge 2025.
+
+## Features
+
+- Modular design: each cipher has its own Python module.
+- Consistent interface: each module contains a `solve()` function.
+- PEP8-compliant code, optionally Flake8-aligned.
+- Pytest coverage for all completed ciphers.
+
+## Setup
+
+1. Clone the repository:  
+   `git clone http://github.com/willemvancrgs/enigmax-codebreakers`  
+   `cd enigmax-codebreakers`  
+2. Install dependencies:  
+   `pip install -r requirements.txt`  
+
+## Usage
+
+Each cipher module exposes a `solve()` function that takes the ciphertext and any required additional parameters. Example:
+
+```python
+from ciphers.affine import solve
+
+ciphertext = "GIEWIV GMTLIV HIQS"
+plaintext = solve(ciphertext, 5, 8)
+print(plaintext)
+```
+
+## Ciphers Implemented
+- Affine cipher
+- Amasco cipher
+- Baconian cipher
+- Beaufort cipher
+- Monoalphabetic cipher
+- Polybias cipher
+- Rail fence / Redefence cipher
+
+## Contribution guideline
+- Scripts should be in Python unless otherwise decided
 - Work on changes in a seperate branch before merging
-- Each cipher should have its own python file/module to solve it, including a subroutine called `solve()` that takes ciphertext and any extra information as parameters, and then solves it
-## Ciphers implemented
-- Affine Cipher
-- Morse Code
-- Amsco Cipher
-- Beaufort Cipher
-- Rail fence / Redefence Cipher
+- Ensure each cipher is:
+    1. PEP8-compliant
+    2. Includes pytests
+    3. Implements the base cipher class
+    4. Optionally Flake8-aligned
+
+## Planned Ciphers / Roadmap
