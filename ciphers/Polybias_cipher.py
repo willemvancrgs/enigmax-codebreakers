@@ -29,5 +29,8 @@ def polybias_decode(cipher_text: str):
 solve = polybias_decode
 
 if __name__ == "__main__":
-    cipher_text = input("Enter Polybius cipher text (digits, spaces allowed): ").strip()
+    cipher_text = input(
+        "Enter Polybius cipher text (digits, spaces allowed): "
+    )
+    cipher_text = cipher_text.strip()
     polybias_decode(cipher_text)
