@@ -1,3 +1,4 @@
+# DONT RUN THIS DIRECTLY AS A TEST IT PURPOSEFULLY DOESN'T WORK
 from . import monoalphabetic
 from . import Morse_Code
 from . import amsco
