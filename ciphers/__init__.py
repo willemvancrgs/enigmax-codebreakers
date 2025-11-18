@@ -1,7 +1,7 @@
 # DONT RUN THIS DIRECTLY AS A TEST IT PURPOSEFULLY DOESN'T WORK
 from . import monoalphabetic
-from . import Morse_Code
+from . import morse_code
 from . import amsco
 from . import rail_fence
-from . import Polybias_cipher
+from . import polybias_cipher
 from .base_cipher import Cipher
