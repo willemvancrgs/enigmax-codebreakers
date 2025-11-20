@@ -1,5 +1,5 @@
 from string import ascii_uppercase
-from base_cipher import Cipher
+from .base_cipher import Cipher
 
 class monoalphabetic_cipher(Cipher):
     def solve(self, key: str) -> str:

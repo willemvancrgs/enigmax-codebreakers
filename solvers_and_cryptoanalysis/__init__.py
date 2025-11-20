@@ -1,1 +1,1 @@
-from .checking import *
+from . import checking

@@ -1,6 +1,7 @@
 from string import ascii_uppercase
 from collections import Counter
 
+
 class Cipher:
     def __init__(self, ciphertext: str):
         self.ciphertext = ciphertext.upper()
