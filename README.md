@@ -56,11 +56,11 @@ print(plaintext)
 
 ## Curent assignees
 
-Sam - Playfair cipher and double playfair
-Daniel - Vertical two square
-Samarth - Horizontal two square
-Frazer - ADFGVX cipher
-Leo - Nihilist substitution cipher
-Willem - Bifid cipher 
-Tejas - Trifid cipher
-Ibrahim - Four squares cipher
+Sam | Playfair cipher and double playfair
+Daniel | Vertical two square
+Samarth | Horizontal two square
+Frazer | ADFGVX cipher
+Leo | Nihilist substitution cipher
+Willem | Bifid cipher 
+Tejas | Trifid cipher
+Ibrahim | Four squares cipher
