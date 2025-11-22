@@ -1,1 +1,1 @@
-from . import checking#, frequency
+from .checking import *

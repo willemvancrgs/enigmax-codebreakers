@@ -1,7 +1,7 @@
 # Entirely unfinished ignore pls
 
-from ciphers.monoalphabetic import monoalphabetic_cipher
-from solvers_and_cryptoanalysis.checking import letter_freq_vector, PP_freq
+from .monoalphabetic import monoalphabetic_cipher
+from .checking import letter_freq_vector, PP_freq
 from random import shuffle
 
 
