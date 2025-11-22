@@ -14,8 +14,8 @@ def encode(plain_text: str, key: str) -> str:
 
     Note:
         The Beaufort cipher is reciprocal, meaning the same process is used
-        for both encoding and decoding. However, we provide separate functions
-        for clarity.
+        for both encoding and decoding. However, we provide separate
+        functions for clarity.
     """
     return decode(plain_text, key)
 
