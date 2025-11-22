@@ -42,10 +42,11 @@ print(plaintext)
 - Scripts should be in Python unless otherwise decided
 - Work on changes in a seperate branch before merging
 - Ensure each cipher is:
-    1. PEP8-compliant
+    1. [PEP8-compliant](https://peps.python.org/pep-0008/)
     2. Includes pytests
     3. Implements the base cipher class
-    4. Optionally Flake8-aligned
+    4. Has decode and CLI functions
+    5. Optionally Flake8-aligned
 
 ## Planned Ciphers / Roadmap
 
