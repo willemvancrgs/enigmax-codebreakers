@@ -2,37 +2,48 @@ import math
 from string import ascii_uppercase
 from typing import Iterable
 
-PP_freq = {'A': 0.0774016898062627, 'B': 0.0168531760692496, 'C': 0.025614686881730825,
-           'D': 0.04095553123241224, 'E': 0.128536111235796, 'F': 0.022436373304237638,
-           'G': 0.019002551628173565, 'H': 0.06243029635486622, 'I': 0.07112447733056187,
-           'J': 0.0017505757564248202, 'K': 0.006037242031772777, 'L': 0.04052738252669887,
-           'M': 0.02706486798172772, 'N': 0.07024055742199234, 'O': 0.07489322178448238,
-           'P': 0.0158052475838947, 'Q': 0.0011394280071404155, 'R': 0.0607142487198699,
-           'S': 0.06162579112558223, 'T': 0.08776530545302622, 'U': 0.02814559818243969,
-           'V': 0.010562152344977366, 'W': 0.02247262783173756, 'X': 0.0017816510657104679,
-           'Y': 0.023442868043878337, 'Z': 0.0016763402953535508} # Letter Frequency of Pride and Prejudice
+PP_freq = {'A': 0.0774016898062627, 'B': 0.0168531760692496,
+           'C': 0.025614686881730825, 'D': 0.04095553123241224,
+           'E': 0.128536111235796, 'F': 0.022436373304237638,
+           'G': 0.019002551628173565, 'H': 0.06243029635486622,
+           'I': 0.07112447733056187, 'J': 0.0017505757564248202,
+           'K': 0.006037242031772777, 'L': 0.04052738252669887,
+           'M': 0.02706486798172772, 'N': 0.07024055742199234,
+           'O': 0.07489322178448238, 'P': 0.0158052475838947,
+           'Q': 0.0011394280071404155, 'R': 0.0607142487198699,
+           'S': 0.06162579112558223, 'T': 0.08776530545302622,
+           'U': 0.02814559818243969, 'V': 0.010562152344977366,
+           'W': 0.02247262783173756, 'X': 0.0017816510657104679,
+           'Y': 0.023442868043878337, 'Z': 0.0016763402953535508}
+# Letter Frequency of Pride and Prejudice
 
-def consecutive_freq(text: str, length: int=4) -> dict[str, int]:
+
+def consecutive_freq(text: str, length: int = 4) -> dict[str, int]:
     chunk_freq = {}
-    
+
     for i in range(len(text) - length + 1):
         chunk = text[i:i+length]
         if chunk in chunk_freq:
             chunk_freq[chunk] += 1
         else:
-            chunk_freq[chunk] = 1 # Creates chunk val
+            chunk_freq[chunk] = 1  # Creates chunk val
 
-    chunk_freq: dict[str, int] = dict(sorted(chunk_freq.items(), key=lambda x: x[1], reverse=True)) # returns sorted list
+    # Return sorted list
+    chunk_freq: dict[str, int] = dict(sorted(chunk_freq.items(),
+                                             key=lambda x: x[1],
+                                             reverse=True))
+
     return chunk_freq
 
-def letter_freq_vector(text: str) -> dict[str, float]: # For 26-degree vector angle
+
+def letter_freq_vector(text: str) -> dict[str, float]:
     text = text.upper()
     freq = {letter: 0 for letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ"}
     total = 0
 
-    for l in text:
-        if l in freq:
-            freq[l] += 1
+    for letter in text:
+        if letter in freq:
+            freq[letter] += 1
             total += 1
 
     if total == 0:
@@ -40,31 +51,40 @@ def letter_freq_vector(text: str) -> dict[str, float]: # For 26-degree vector an
 
     return {k: v / total for k, v in freq.items()}
 
+
 def shan_entropy(text: str) -> float:
     probs = letter_freq_vector(text)
-    return -sum(prob * math.log2(prob) for _, prob in probs if prob > 0)
+    # iterate over probability values (floats) instead of dict keys
+    return -sum(prob * math.log2(prob) for prob in probs.values() if prob > 0)
+
 
 def cosine_angle(vector1: list[float], vector2: list[float]) -> float:
-    dot = sum(a*b for a,b in zip(vector1, vector2)) # Dot product of both vectors
-    
-    norm1 = math.sqrt(sum(a*a for a in vector1)) # Length of first vector arrow using pythag
-    norm2 = math.sqrt(sum(b*b for b in vector2)) # Length of second vector arrow using pythag
-    
-    angle_cosine = dot / (norm1 * norm2) # Cosine ratio of the vector's aligments
-    angle_cosine = max(-1, min(1, angle_cosine)) # Prevent floating point error crashes	
-    angle_radians = math.acos(angle_cosine) # Angle in radians
-    angle_degrees = math.degrees(angle_radians) # Angle in degrees
+    # Dot product of both vectors
+    dot = sum(a*b for a, b in zip(vector1, vector2))
+
+    # Length of vector arrows using pythag
+    norm1 = math.sqrt(sum(a*a for a in vector1))
+    norm2 = math.sqrt(sum(b*b for b in vector2))
+
+    # Cosine ratio of the vector's aligments
+    angle_cosine = dot / (norm1 * norm2)
+
+    # max and min used to prevent /0 crashes
+    angle_cosine = max(-1, min(1, angle_cosine))
+    angle_radians = math.acos(angle_cosine)  # Angle in radians
+    angle_degrees = math.degrees(angle_radians)  # Angle in degrees
 
     return angle_degrees
+
 
 def display_freq(freqs: dict[str, float]) -> None:
     for i in freqs:
         print(i, freqs[i])
 
 
-def chisq(text: str, expected: dict[str, float]) -> tuple[str, float]: 
+def chisq(text: str, expected: dict[str, float]) -> tuple[str, float]:
     """
-    Performs the chi-squared heuristic 
+    Performs the chi-squared heuristic
     """
     value: float = 0
     alphabet = ascii_uppercase
@@ -76,14 +96,25 @@ def chisq(text: str, expected: dict[str, float]) -> tuple[str, float]:
         value += ((cleantext.count(letter) - nominalvalue) ** 2)/(nominalvalue)
     return (text, value)
 
-def chisqrank(solutions: Iterable[str], expected: dict[str, float] | None = None) -> list[tuple[str, float]]:
+
+def chisqrank(solutions: Iterable[str],
+              expected: dict[str, float] | None = None
+              ) -> list[tuple[str, float]]:
     """
     Ranks proposed solutions with the chi-squared heuristic
     """
     ranking: list[tuple[str, float]] = []
     if expected is None:
-        expected = {'E' : 12.0,'T' : 9.10,'A' : 8.12,'O' : 7.68,'I' : 7.31,'N' : 6.95,'S' : 6.28,'R' : 6.02,'H' : 5.92,'D' : 4.32,'L' : 3.98,'U' : 2.88,'C': 2.71,'M' : 2.61,'F' : 2.30,'Y' : 2.11,'W' : 2.09,'G' : 2.03,'P' : 1.82,'B' : 1.49,'V' : 1.11,'K' : 0.69,'X' : 0.17,'Q' : 0.11,'J' : 0.10,'Z' : 0.07 }
-    
+        expected = {'E': 12.0, 'T': 9.10, 'A': 8.12,
+                    'O': 7.68, 'I': 7.31, 'N': 6.95,
+                    'S': 6.28, 'R': 6.02, 'H': 5.92,
+                    'D': 4.32, 'L': 3.98, 'U': 2.88,
+                    'C': 2.71, 'M': 2.61, 'F': 2.30,
+                    'Y': 2.11, 'W': 2.09, 'G': 2.03,
+                    'P': 1.82, 'B': 1.49, 'V': 1.11,
+                    'K': 0.69, 'X': 0.17, 'Q': 0.11,
+                    'J': 0.10, 'Z': 0.07}
+
     for solution in solutions:
         score = chisq(solution, expected)
         ranking.append(score)
@@ -99,15 +130,18 @@ if __name__ == "__main__":
 
     text = text.replace(' ', '')
 
-    display_freq(consecutive_freq(text, 4)) # Tetragram 
-    print("\n") 
+    display_freq(consecutive_freq(text, 4)) # Tetragram
+    print("\n")
     print(shan_entropy(text),
           shan_entropy("ABCDEFGHIJKLMNOPQRSTUVWXYZ"),
           shan_entropy("AAAAAQAAAQAAA"), sep='\n')
-    
+
     print(letter_freq_vector(text))
     """
     print(cosine_angle([1, 2, 3], [3, 2, 1]))
     import requests
-    text = requests.get("https://www.gutenberg.org/cache/epub/1342/pg1342.txt").text  # Pride and Prejudice
+    text = requests.get(
+        "https://www.gutenberg.org/cache/epub/1342/pg1342.txt"
+    ).text
+    # Pride and Prejudice
     print(letter_freq_vector(text))
