@@ -48,3 +48,19 @@ print(plaintext)
     4. Optionally Flake8-aligned
 
 ## Planned Ciphers / Roadmap
+
+1. Fix file structure
+2. Make autosolvers for all existing ciphers
+3. Full CLI
+4. More ciphers
+
+## Curent assignees
+
+Sam - Playfair cipher and double playfair
+Daniel - Vertical two square
+Samarth - Horizontal two square
+Frazer - ADFGVX cipher
+Leo - Nihilist substitution cipher
+Willem - Bifid cipher 
+Tejas - Trifid cipher
+Ibrahim - Four squares cipher
