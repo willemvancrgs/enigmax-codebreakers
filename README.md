@@ -22,10 +22,10 @@ A collection of Python scripts to expedite solving ciphers, developed for the Na
 Each cipher module exposes a `solve()` function that takes the ciphertext and any required additional parameters. Example:
 
 ```python
-from ciphers.affine import solve
+from engimax.ciphers import affine
 
 ciphertext = "GIEWIV GMTLIV HIQS"
-plaintext = solve(ciphertext, 5, 8)
+plaintext = affine.solve(ciphertext, 5, 8)
 print(plaintext)
 ```
 
