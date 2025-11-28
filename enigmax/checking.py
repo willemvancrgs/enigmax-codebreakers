@@ -15,6 +15,19 @@ PP_freq = {'A': 0.0774016898062627, 'B': 0.0168531760692496,
            'U': 0.02814559818243969, 'V': 0.010562152344977366,
            'W': 0.02247262783173756, 'X': 0.0017816510657104679,
            'Y': 0.023442868043878337, 'Z': 0.0016763402953535508}
+
+
+TETRAGRAMS = {}
+
+with open("quadragrams.txt", "r") as file:
+    TOTAL_CHARACTERS = 4374127904
+    for line in file.readlines():
+        tokens = line.split()
+        key = str(tokens[0]).lower()
+        frequency = (int(tokens[1]) / TOTAL_CHARACTERS) * 100
+        TETRAGRAMS[key] = frequency
+
+
 # Letter Frequency of Pride and Prejudice
 
 

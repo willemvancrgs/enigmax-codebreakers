@@ -1,5 +1,5 @@
 from .base_cipher import Cipher
-from math import log
+from string import ascii_uppercase
 
 """
 Most of the code here is a direct adaptation of National Cipher Challenge decryption 
@@ -15,12 +15,12 @@ class vignere_cipher(Cipher):
         """
         plaintext = ''
          for i in range(len(ciphertext)):
-             p = ALPHABET.index(ciphertext[i])
-             k = ALPHABET.index(key[i%len(key)])
+             p = ascii_uppercase.index(ciphertext[i])
+             k = ascii_uppercase.index(key[i%len(key)])
              c = (p - k) % 26
-             plaintext += ALPHABET[c]
+             plaintext += ascii_uppercase[c]
          return plaintext
 
     
-    def autosolve(self, englishkey=False) -> str | None:
-        pass
+    def autosolve(self, period=None:int | None, englishkey=False:bool) -> str | None:
+        raise NotImplementedError
